@@ -10,7 +10,7 @@ The owner (or real estate agency) has to provide a rent receipt to the tenant fo
 ## Installation
 ```
 cp data.example.json data.json
-cp public/signature.example.png signature.png 
+cp public/signature.example.png public/signature.png 
 ```
 
 ```
