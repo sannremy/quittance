@@ -37,5 +37,6 @@ next-env.d.ts
 
 # app
 app/data.json
+app/data-*.json
 public/signature.*
 !public/signature.example.png
