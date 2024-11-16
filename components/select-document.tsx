@@ -11,13 +11,15 @@ import {
 } from "@/components/ui/select"
 
 export function SelectDocument({
+  defaultValue,
   onValueChange,
 }: {
+  defaultValue?: string
   onValueChange: (value: string) => void
 }) {
   return (
-    <Select onValueChange={onValueChange}>
-      <SelectTrigger className="w-[220px]">
+    <Select onValueChange={onValueChange} defaultValue={defaultValue}>
+      <SelectTrigger>
         <SelectValue placeholder="Sélectionner un document" />
       </SelectTrigger>
       <SelectContent>

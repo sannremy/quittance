@@ -14,10 +14,6 @@ import {
 } from "@react-pdf/renderer";
 import type { PDFVersion } from "@react-pdf/types";
 import { useIsClient } from "usehooks-ts";
-import { SelectType } from "@/components/select-type";
-import { DatePickerWithRange } from "@/components/date-picker-with-range";
-import { DateRange } from "react-day-picker";
-import { SelectDocument } from "@/components/select-document";
 import { Suspense } from "react";
 
 type QuittanceProps = {
@@ -369,33 +365,12 @@ const Quittance = ({
 const PDFQuittance = (quittanceProps: QuittanceProps) => {
   const isClientSide = useIsClient();
 
-  const handleDocument = (value: string) => {
-    console.log(value);
-  };
-
-  const handleType = (value: string) => {
-    console.log(value);
-  };
-
-  const handleDateRange = (value: DateRange | undefined) => {
-    console.log(value);
-  };
-
   return isClientSide && (
-    <div className="relative flex flex-col items-stretch justify-between w-full h-screen">
-      <div className="flex-none h-fit sticky top-0 bg-white px-5 py-3">
-        <div className="flex gap-3">
-          <SelectDocument onValueChange={handleDocument} />
-          <SelectType onValueChange={handleType} />
-          <DatePickerWithRange onValueChange={handleDateRange} />
-        </div>
-      </div>
-      <Suspense>
-        <PDFViewer className="flex-1">
-          <Quittance {...quittanceProps} />
-        </PDFViewer>
-      </Suspense>
-    </div>
+    <Suspense>
+      <PDFViewer className="relative w-full h-screen">
+        <Quittance {...quittanceProps} />
+      </PDFViewer>
+    </Suspense>
   );
 };
 

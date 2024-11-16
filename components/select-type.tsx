@@ -12,12 +12,14 @@ import {
 
 export function SelectType({
   onValueChange,
+  defaultValue,
 }: {
   onValueChange: (value: string) => void
+  defaultValue?: string
 }) {
   return (
     <Select onValueChange={onValueChange}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger>
         <SelectValue placeholder="Sélectionner un bien" />
       </SelectTrigger>
       <SelectContent>
