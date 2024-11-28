@@ -1,9 +1,9 @@
-import Form from "./form";
+import ToolForm from "./tool-form";
 
 export default function Home() {
   return (
     <div>
-      <Form />
+      <ToolForm />
     </div>
   );
 }

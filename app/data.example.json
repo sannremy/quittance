@@ -1,59 +1,53 @@
 {
-  "startDate": "2025-01-01",
-  "endDate": "2025-01-31",
-  "paymentDate": "2025-01-05",
-
   "rent": {
-    "amounts": [
-      {
-        "label": "Loyer",
-        "amount": 543.21
-      },
-      {
-        "label": "Provision pour charges",
-        "amount": 123.45
-      }
-    ],
-    "currency": "EUR",
-    "address": "42 rue du Lorem Ipsum",
-    "city": "Paris",
-    "zipCode": "75000"
+    "appartement": {
+      "amounts": [
+        {
+          "label": "Loyer de l'appartement",
+          "amount": 123.45
+        },
+        {
+          "label": "Provision pour charges",
+          "amount": 67.89
+        }
+      ],
+      "currency": "EUR",
+      "address": "12 rue du Dolor Sit Amet",
+      "city": "Lorem sur Ipsum",
+      "zipCode": "99999"
+    },
+    "parking": {
+      "amounts": [
+        {
+          "label": "Loyer du parking",
+          "amount": 12.34
+        }
+      ],
+      "currency": "EUR",
+      "address": "12 rue du Dolor Sit Amet",
+      "city": "Lorem sur Ipsum",
+      "zipCode": "99999"
+    }
   },
 
   "landlord": {
     "title": "Madame",
     "name": "Jane Doe",
-    "address": "12 rue du Dolor Sit Amet",
-    "zipCode": "75000",
-    "city": "Paris"
+    "address": "99 avenue du Lorem Ipsum",
+    "zipCode": "12345",
+    "city": "Dolor"
   },
 
   "tenant": {
     "title": "Monsieur",
     "name": "John Doe",
-    "address": "42 rue du Lorem Ipsum",
-    "city": "Paris",
-    "zipCode": "75000"
+    "address": "12 rue du Dolor Sit Amet",
+    "city": "Lorem sur Ipsum",
+    "zipCode": "99999"
   },
 
-  "title": "Quittance de loyer",
-  "period": "Du {startDate} au {endDate}",
-
-  "text": "Je soussignée, {landlordName}, propriétaire du logement désigné ci-dessus, déclare avoir reçu de {tenantTitle} {tenantName}, la somme de {totalAmountWords} ({totalAmount}) au titre du paiement du loyer et des charges pour la période de location du {startDate} au {endDate} et lui en donne quittance, sous réserve de tous mes droits.",
-  "legalText": "Cette quittance annule tous les reçus qui auraient pu être établis précédemment en cas de paiement partiel du montant du présent terme. Elle est à conserver pendant trois ans par le locataire (loi n° 89-462 du 6 juillet 1989 : art. 7-1).",
   "signature": {
     "width": "5cm",
     "imageUrl": "/signature.png"
-  },
-
-  "metadata": {
-    "title": "Quittance de loyer",
-    "author": "Jane Doe",
-    "subject": "Quittance de loyer",
-    "keywords": "quittance, loyer",
-    "creator": "Jane Doe",
-    "producer": "Jane Doe",
-    "pdfVersion": "1.7ext3",
-    "language": "fr"
   }
 }

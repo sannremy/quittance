@@ -1,6 +1,6 @@
 import data from "@/app/data.json";
-import PDFQuittance from "@/app/quittance/quittance";
-import { formatQuittanceProps } from "@/lib/utils";
+import PDFEcheance from "@/app/echeance/echeance";
+import { formatEcheanceProps } from "@/lib/utils";
 
 export default function Page({
   searchParams,
@@ -17,7 +17,7 @@ export default function Page({
   const endDate = searchParams.endDate ?? new Date().toISOString();
   const paymentDate = searchParams.paymentDate ?? new Date().toISOString();
 
-  const quittanceProps = formatQuittanceProps({
+  const echeanceProps = formatEcheanceProps({
     startDate,
     endDate,
     paymentDate,
@@ -27,5 +27,5 @@ export default function Page({
     tenant: data.tenant,
   });
 
-  return <PDFQuittance {...quittanceProps} />;
+  return <PDFEcheance {...echeanceProps} />;
 }
