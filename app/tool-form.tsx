@@ -170,7 +170,7 @@ export default function ToolForm() {
             name="paymentDate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Date du paiement</FormLabel>
+                <FormLabel>Date du paiement/à payer</FormLabel>
                 <DatePicker onValueChange={field.onChange} />
                 <FormMessage />
               </FormItem>
