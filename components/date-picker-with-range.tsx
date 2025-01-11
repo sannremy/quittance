@@ -28,6 +28,25 @@ export function DatePickerWithRange({
   onValueChange: (value: DateRange | undefined) => void
 }) {
   const now = new Date();
+  const nextMonth = new Date();
+  nextMonth.setMonth(nextMonth.getMonth() + 1);
+
+  const quickRanges = [
+    {
+      date: {
+        from: startOfMonth(now),
+        to: endOfMonth(now),
+      },
+      label: "Ce mois-ci",
+    },
+    {
+      date: {
+        from: startOfMonth(nextMonth),
+        to: endOfMonth(nextMonth),
+      },
+      label: "Le mois prochain",
+    },
+  ];
 
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: startOfMonth(now),
@@ -67,7 +86,6 @@ export function DatePickerWithRange({
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
-            initialFocus
             mode="range"
             defaultMonth={date?.from}
             selected={date}
@@ -77,6 +95,18 @@ export function DatePickerWithRange({
           />
         </PopoverContent>
       </Popover>
+      <ul className="flex items-start justify-start space-x-2 text-xs">
+        {quickRanges.map((range, index) => (
+          <li key={index}>
+            <Button
+              variant="link"
+              type="button"
+              className="h-auto p-0 text-xs"
+              onClick={() => setDate(range.date)}
+            >{range.label}</Button>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
