@@ -5,6 +5,7 @@ import {
   Font,
   Image,
   Line,
+  PDFDownloadLink,
   PDFViewer,
   Page,
   StyleSheet,
@@ -15,6 +16,9 @@ import {
 import type { PDFVersion } from "@react-pdf/types";
 import { useIsClient } from "usehooks-ts";
 import { Suspense } from "react";
+import { LucideDownload } from "lucide-react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 type QuittanceProps = {
   startDate: Date;
@@ -364,15 +368,26 @@ const Quittance = ({
 
 const PDFQuittance = (quittanceProps: QuittanceProps) => {
   const isClientSide = useIsClient();
+  const capitalize = (s: string) => (s && String(s[0]).toUpperCase() + String(s).slice(1)) || "";
+
+  const document = <Quittance {...quittanceProps} />;
+  const fileName = `${quittanceProps.metadata.title} - ${capitalize(format(quittanceProps.startDate, "MMMM yyyy", { locale: fr }))}.pdf`;
 
   return isClientSide && (
     <Suspense>
+      <div className="px-5 h-8 flex items-center">
+        <PDFDownloadLink document={document} fileName={fileName} className="flex items-center gap-2">
+          <LucideDownload className="w-5 h-5" />
+          {fileName}
+        </PDFDownloadLink>
+      </div>
       <PDFViewer className="relative w-full h-screen">
-        <Quittance {...quittanceProps} />
+        {document}
       </PDFViewer>
     </Suspense>
   );
 };
+
 
 export type { QuittanceProps };
 export default PDFQuittance;

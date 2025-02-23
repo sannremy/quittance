@@ -3,7 +3,6 @@
 import {
   Document,
   Font,
-  Image,
   Line,
   PDFViewer,
   Page,
@@ -11,10 +10,14 @@ import {
   Svg,
   Text,
   View,
+  PDFDownloadLink,
 } from "@react-pdf/renderer";
 import type { PDFVersion } from "@react-pdf/types";
 import { useIsClient } from "usehooks-ts";
 import { Suspense } from "react";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import { LucideDownload } from "lucide-react";
 
 type EcheanceProps = {
   startDate: Date;
@@ -363,11 +366,21 @@ const Echeance = ({
 
 const PDFEcheance = (echeanceProps: EcheanceProps) => {
   const isClientSide = useIsClient();
+  const capitalize = (s: string) => (s && String(s[0]).toUpperCase() + String(s).slice(1)) || "";
+
+  const document = <Echeance {...echeanceProps} />;
+  const fileName = `${echeanceProps.metadata.title} - ${capitalize(format(echeanceProps.startDate, "MMMM yyyy", { locale: fr }))}.pdf`;
 
   return isClientSide && (
     <Suspense>
+      <div className="px-5 h-8 flex items-center">
+        <PDFDownloadLink document={document} fileName={fileName} className="flex items-center gap-2">
+          <LucideDownload className="w-5 h-5" />
+          {fileName}
+        </PDFDownloadLink>
+      </div>
       <PDFViewer className="relative w-full h-screen">
-        <Echeance {...echeanceProps} />
+        {document}
       </PDFViewer>
     </Suspense>
   );
