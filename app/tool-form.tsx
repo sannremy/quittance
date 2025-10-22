@@ -34,9 +34,10 @@ const FormSchema = z.object({
     .regex(/quittance|echeance/, {
       message: "Veuillez sélectionner un type de document valide.",
     }),
-  bien: z.string({
-    required_error: "Veuillez sélectionner un type de bien.",
-  })
+  bien: z
+    .string({
+      required_error: "Veuillez sélectionner un type de bien.",
+    })
     .regex(/appartement|parking/, {
       message: "Veuillez sélectionner un type de bien valide.",
     }),
@@ -56,6 +57,10 @@ export default function ToolForm() {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: {
+      document: new Date().getDate() > 15 ? "echeance" : "quittance",
+      bien: "appartement",
+    },
   })
 
   const document = useWatch({

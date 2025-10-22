@@ -163,7 +163,8 @@ export function formatEcheanceProps({
   const totalAmount =
   specificRent.amounts.reduce((acc, { amount }) => acc + amount * 100, 0) / 100;
   
-  const title = `Avis d'échéance (${rentType})`;
+  // const title = `Avis d'échéance (${rentType})`;
+  const title = `Avis d'échéance`;
 
   const periodText = "Du {startDate} au {endDate}"
 
