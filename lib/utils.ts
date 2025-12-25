@@ -61,7 +61,8 @@ export function formatQuittanceProps({
   const totalAmount =
   specificRent.amounts.reduce((acc, { amount }) => acc + amount * 100, 0) / 100;
   
-  const title = `Quittance de loyer (${rentType})`;
+  // const title = `Quittance de loyer (${rentType})`;
+  const title = `Quittance de loyer`;
 
   const periodText = "Du {startDate} au {endDate}"
 
