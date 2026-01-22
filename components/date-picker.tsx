@@ -24,7 +24,7 @@ export function DatePicker({
 
   React.useEffect(() => {
     onValueChange(date);
-  }, [date]);
+  }, [date, onValueChange]);
 
   const now = new Date();
 

@@ -1,16 +1,47 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
 import { formatCurrency, formatCurrencyToWords, formatDateWithNumber, formatDateWithText } from "./string";
-import { QuittanceProps } from "@/app/quittance/quittance";
+import type { QuittanceProps } from "@/app/quittance/quittance";
 import data from "@/app/data.json";
-import { PDFVersion } from "@react-pdf/types/pdf";
-import { EcheanceProps } from "@/app/echeance/echeance";
+import type { PDFVersion } from "@react-pdf/types/pdf";
+import type { EcheanceProps } from "@/app/echeance/echeance";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
 const pdfVersion = "1.7ext3" as PDFVersion;
+
+interface RentAmount {
+  label: string;
+  amount: number;
+}
+
+interface RentInfo {
+  amounts: RentAmount[];
+  currency: string;
+  address: string;
+  city: string;
+  zipCode: string;
+}
+
+interface PersonInfo {
+  title: string;
+  name: string;
+  address: string;
+  zipCode: string;
+  city: string;
+}
+
+interface FormatDocumentInput {
+  startDate: Date | string;
+  endDate: Date | string;
+  paymentDate: Date | string;
+  rentType: string;
+  rent: Record<string, RentInfo>;
+  landlord: PersonInfo;
+  tenant: PersonInfo;
+}
 
 export function formatQuittanceProps({
   startDate,
@@ -20,38 +51,7 @@ export function formatQuittanceProps({
   rent,
   landlord,
   tenant,
-}: {
-  startDate: Date | string;
-  endDate: Date | string;
-  paymentDate: Date | string;
-  rentType: string;
-  rent: {
-    [key: string]: {
-      amounts: {
-        label: string;
-        amount: number;
-      }[];
-      currency: string;
-      address: string;
-      city: string;
-      zipCode: string;
-    };
-  };
-  landlord: {
-    title: string;
-    name: string;
-    address: string;
-    zipCode: string;
-    city: string;
-  };
-  tenant: {
-    title: string;
-    name: string;
-    address: string;
-    city: string;
-    zipCode: string;
-  };
-}): QuittanceProps {
+}: FormatDocumentInput): QuittanceProps {
   const startDateFmt = startDate instanceof Date ? startDate : new Date(startDate);
   const endDateFmt = endDate instanceof Date ? endDate : new Date(endDate);
   const paymentDateFmt = formatDateWithNumber(paymentDate instanceof Date ? paymentDate : new Date(paymentDate));
@@ -123,38 +123,7 @@ export function formatEcheanceProps({
   rent,
   landlord,
   tenant,
-}: {
-  startDate: Date | string;
-  endDate: Date | string;
-  paymentDate: Date | string;
-  rentType: string;
-  rent: {
-    [key: string]: {
-      amounts: {
-        label: string;
-        amount: number;
-      }[];
-      currency: string;
-      address: string;
-      city: string;
-      zipCode: string;
-    };
-  };
-  landlord: {
-    title: string;
-    name: string;
-    address: string;
-    zipCode: string;
-    city: string;
-  };
-  tenant: {
-    title: string;
-    name: string;
-    address: string;
-    city: string;
-    zipCode: string;
-  };
-}): EcheanceProps {
+}: FormatDocumentInput): EcheanceProps {
   const startDateFmt = startDate instanceof Date ? startDate : new Date(startDate);
   const endDateFmt = endDate instanceof Date ? endDate : new Date(endDate);
   const paymentDateFmt = formatDateWithNumber(paymentDate instanceof Date ? paymentDate : new Date(paymentDate));

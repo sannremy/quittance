@@ -55,7 +55,7 @@ export function DatePickerWithRange({
 
   React.useEffect(() => {
     onValueChange(date);
-  }, [date])
+  }, [date, onValueChange]);
 
   return (
     <div className={cn("grid gap-2 w-full", className)}>

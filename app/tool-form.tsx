@@ -1,7 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm, useWatch } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Button } from "@/components/ui/button"
@@ -63,11 +63,6 @@ export default function ToolForm() {
     },
   })
 
-  const document = useWatch({
-    control: form.control,
-    name: 'document'
-  })
-
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const {
       document,
@@ -121,7 +116,7 @@ export default function ToolForm() {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Type de document</SelectLabel>
-                      <SelectItem value="echeance">Avis d'échéance</SelectItem>
+                      <SelectItem value="echeance">Avis d&apos;échéance</SelectItem>
                       <SelectItem value="quittance">Quittance</SelectItem>
                     </SelectGroup>
                   </SelectContent>
