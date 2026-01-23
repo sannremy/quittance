@@ -29,14 +29,14 @@ import { useRouter } from "next/navigation"
 const FormSchema = z.object({
   document: z
     .string({
-      required_error: "Veuillez sélectionner un type de document.",
+      message: "Veuillez sélectionner un type de document.",
     })
     .regex(/quittance|echeance/, {
       message: "Veuillez sélectionner un type de document valide.",
     }),
   bien: z
     .string({
-      required_error: "Veuillez sélectionner un type de bien.",
+      message: "Veuillez sélectionner un type de bien.",
     })
     .regex(/appartement|parking/, {
       message: "Veuillez sélectionner un type de bien valide.",
@@ -45,10 +45,10 @@ const FormSchema = z.object({
     from: z.date(),
     to: z.date(),
   }, {
-    required_error: "Veuillez sélectionner une période.",
+    message: "Veuillez sélectionner une période.",
   }),
   paymentDate: z.date({
-    required_error: "Veuillez sélectionner une date de paiement.",
+    message: "Veuillez sélectionner une date de paiement.",
   }).optional(),
 })
 
