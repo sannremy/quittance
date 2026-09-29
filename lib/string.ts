@@ -11,6 +11,13 @@ const formatCurrency = (value: number) => {
   );
 };
 
+const formatIndex = (value: number) => {
+  return value.toLocaleString(locale, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
+
 const formatDateWithNumber = (date: Date) => {
   return date.toLocaleDateString(locale, {
     year: "numeric",
@@ -43,4 +50,5 @@ export {
   formatDateWithNumber,
   formatDateWithText,
   formatCurrencyToWords,
+  formatIndex,
 };

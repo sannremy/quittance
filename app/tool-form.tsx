@@ -25,13 +25,15 @@ import {
 import { DatePickerWithRange } from "@/components/date-picker-with-range"
 import { DatePicker } from "@/components/date-picker"
 import { useRouter } from "next/navigation"
+import { formatIrlLabel, getIrlKey, latestIrl } from "@/lib/irl"
+import type { IrlEntry } from "@/lib/irl"
 
 const FormSchema = z.object({
   document: z
     .string({
       message: "Veuillez sélectionner un type de document.",
     })
-    .regex(/quittance|echeance/, {
+    .regex(/quittance|echeance|revision/, {
       message: "Veuillez sélectionner un type de document valide.",
     }),
   bien: z
@@ -50,9 +52,10 @@ const FormSchema = z.object({
   paymentDate: z.date({
     message: "Veuillez sélectionner une date de paiement.",
   }).optional(),
+  irl: z.string().optional(),
 })
 
-export default function ToolForm() {
+export default function ToolForm({ irlEntries }: { irlEntries: IrlEntry[] }) {
   const router = useRouter()
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -60,8 +63,11 @@ export default function ToolForm() {
     defaultValues: {
       document: new Date().getDate() > 15 ? "echeance" : "quittance",
       bien: "appartement",
+      irl: getIrlKey(latestIrl(irlEntries)),
     },
   })
+
+  const documentType = form.watch("document")
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
     const {
@@ -69,6 +75,7 @@ export default function ToolForm() {
       periode: { from: startDate, to: endDate },
       paymentDate,
       bien: type,
+      irl,
     } = data;
 
     const searchParams = new URLSearchParams();
@@ -88,10 +95,16 @@ export default function ToolForm() {
       searchParams.set("paymentDate", paymentDate?.toISOString());
     }
 
+    if (irl && document === 'revision') {
+      searchParams.set("irl", irl);
+    }
+
     if (document === 'quittance') {
       router.push(`/quittance?${searchParams.toString()}`);
     } else if (document === 'echeance') {
       router.push(`/echeance?${searchParams.toString()}`);
+    } else if (document === 'revision') {
+      router.push(`/revision?${searchParams.toString()}`);
     }
   }
 
@@ -118,6 +131,7 @@ export default function ToolForm() {
                       <SelectLabel>Type de document</SelectLabel>
                       <SelectItem value="echeance">Avis d&apos;échéance</SelectItem>
                       <SelectItem value="quittance">Quittance</SelectItem>
+                      <SelectItem value="revision">Révision du loyer et des charges</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -164,6 +178,40 @@ export default function ToolForm() {
               </FormItem>
             )}
           />
+
+          {/* Trimestre de référence (IRL) */}
+          {documentType === "revision" && (
+            <FormField
+              control={form.control}
+              name="irl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Trimestre de référence (IRL)</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un trimestre" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Indice de référence des loyers</SelectLabel>
+                        {irlEntries.map((entry) => {
+                          const key = getIrlKey(entry)
+                          return (
+                            <SelectItem key={key} value={key}>
+                              {formatIrlLabel(entry)} — {entry.value.toString().replace(".", ",")}
+                            </SelectItem>
+                          )
+                        })}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
 
           <FormField
             control={form.control}

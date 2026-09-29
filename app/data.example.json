@@ -14,7 +14,11 @@
       "currency": "EUR",
       "address": "12 rue du Dolor Sit Amet",
       "city": "Lorem sur Ipsum",
-      "zipCode": "99999"
+      "zipCode": "99999",
+      "revision": {
+        "currentCharges": 67.89,
+        "newCharges": 70
+      }
     },
     "parking": {
       "amounts": [
